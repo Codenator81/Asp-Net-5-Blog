@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using AspNetBlog.Models;
+using Microsoft.Data.Entity;
 
 namespace AspNetBlog.Controllers
 {
@@ -20,25 +21,8 @@ namespace AspNetBlog.Controllers
 
         public IActionResult Post(long id)
         {
-            var post = new Post
-            {
-                Title = "My Blog Post",
-                PostedDate = DateTime.Now,
-                Author = "Alex Poltarjonoks",
-                Body =
-                    "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy " +
-                    "eirmod tempor invidunt ut labore et dolore magna aliquyam erat, " +
-                    "sed diam voluptua. At vero eos et accusam et justo duo dolores et ea " +
-                    "rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem " +
-                    "ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, " +
-                    "sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat," +
-                    " sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. " +
-                    "Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet." +
-                    " Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy " +
-                    "eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam " +
-                    "voluptua. At vero eos et accusam et justo duo dolores et ea rebum. " +
-                    "Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-            };
+
+            var post = db.Posts.SingleOrDefault(x => x.Id == id);
 
             return View(post);
         }
@@ -61,7 +45,7 @@ namespace AspNetBlog.Controllers
             db.Posts.Add(post);
             await db.SaveChangesAsync();
 
-            return View();
+            return RedirectToAction("Post", new {id = post.Id});
         }
     }
 }
