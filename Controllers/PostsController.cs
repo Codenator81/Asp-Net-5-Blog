@@ -31,5 +31,14 @@ namespace AspNetBlog.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public IActionResult Create(Post post)
+        {
+            post.PostedDate = DateTime.Now;
+            post.Author = User.Identity.Name;
+
+            return View();
+        }
     }
 }
