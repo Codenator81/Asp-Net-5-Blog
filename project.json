@@ -8,16 +8,22 @@
     "Microsoft.AspNet.Server.WebListener": "1.0.0-beta7",
     "Microsoft.AspNet.StaticFiles": "1.0.0-beta7",
     "Microsoft.AspNet.Mvc": "6.0.0-beta7",
-    "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-beta7"
+    "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-beta7",
+    "EntityFramework.Commands": "7.0.0-beta7"
   },
 
   "commands": {
-    "web": "Microsoft.AspNet.Hosting --config hosting.ini"
+    "web": "Microsoft.AspNet.Hosting --config hosting.ini",
+    "kestrel": "Microsoft.AspNet.Hosting --server Microsoft.AspNet.Server.Kestrel --server.urls http://localhost:5004",
+    "ef": "EntityFramework.Commands"
   },
 
   "frameworks": {
-    "dnx451": { },
-    "dnxcore50": { }
+    "dnx451": {
+      "dependencies": {
+        "EntityFramework7.Npgsql": "3.1.0-beta7-1"
+      }
+    }    
   },
 
   "publishExclude": [

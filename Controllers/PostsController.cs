@@ -9,6 +9,9 @@ namespace AspNetBlog.Controllers
 {
     public class PostsController : Controller
     {
+        [FromServices]
+        public BlogDataContext db { get; set; }
+
         // GET: /<controller>/
         public IActionResult Index()
         {
@@ -46,14 +49,17 @@ namespace AspNetBlog.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Post post)
+        public async Task<IActionResult> Create(Post post)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(post);
             }
             post.PostedDate = DateTime.Now;
             post.Author = User.Identity.Name;
+
+            db.Posts.Add(post);
+            await db.SaveChangesAsync();
 
             return View();
         }
