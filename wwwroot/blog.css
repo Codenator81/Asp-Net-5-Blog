@@ -22,6 +22,10 @@ h6, .h6 {
 .input-validation-error {
     border-color: #a94442;
 }
+.field-validation-error,
+.validation-summary-errors {
+    color: #a94442;
+}
 
 
 /*
