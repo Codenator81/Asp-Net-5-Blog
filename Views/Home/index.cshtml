@@ -1,5 +1,11 @@
-﻿@{
+﻿@model AspNetBlog.Models.Post[]
+@{
     Layout = "_Layout";
+}
+
+@foreach (var post in Model)
+{
+    @Html.Partial("_Post", post)
 }
 
 <nav class="hide">

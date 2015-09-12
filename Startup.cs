@@ -30,6 +30,7 @@ namespace AspNetBlog
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<AspNetBlog.Models.BlogDataContext>();
+            services.AddTransient<AspNetBlog.Models.FormattingService>();
             var connectPostgres = "Host=localhost;Username=postgres;Password=root;Database=asp_net_blog";
             services.AddEntityFramework()
                 .AddNpgsql()
