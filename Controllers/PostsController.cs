@@ -11,7 +11,7 @@ namespace AspNetBlog.Controllers
     public class PostsController : Controller
     {
         [FromServices]
-        public BlogDataContext db { get; set; }
+        private BlogDataContext Db { get; set; }
 
         // GET: /<controller>/
         public IActionResult Index()
@@ -22,7 +22,7 @@ namespace AspNetBlog.Controllers
         public IActionResult Post(long id)
         {
 
-            var post = db.Posts.SingleOrDefault(x => x.Id == id);
+            var post = Db.Posts.SingleOrDefault(x => x.Id == id);
 
             return View(post);
         }
@@ -42,8 +42,8 @@ namespace AspNetBlog.Controllers
             post.PostedDate = DateTime.Now;
             post.Author = User.Identity.Name;
 
-            db.Posts.Add(post);
-            await db.SaveChangesAsync();
+            Db.Posts.Add(post);
+            await Db.SaveChangesAsync();
 
             return RedirectToAction("Post", new {id = post.Id});
         }
