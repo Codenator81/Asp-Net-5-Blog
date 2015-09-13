@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using AspNetBlog.Models;
 using Microsoft.Data.Entity;
+using Newtonsoft.Json;
 
 namespace AspNetBlog.Controllers
 {
@@ -30,6 +31,16 @@ namespace AspNetBlog.Controllers
             return View(post);
         }
 
+        [Route("posts/{year:int}/{month:int}/{key}")]
+        public IActionResult Post(int year, int month, string key)
+        {
+            var post = _dataContext.Posts.SingleOrDefault(
+                x => x.PostedDate.Year == year && x.PostedDate.Month == month
+                     && x.Key == key.ToLower());
+
+            return View(post);
+        }
+
         public IActionResult Create()
         {
             return View();
@@ -48,7 +59,7 @@ namespace AspNetBlog.Controllers
             _dataContext.Posts.Add(post);
             await _dataContext.SaveChangesAsync();
 
-            return RedirectToAction("Post", new {id = post.Id});
+            return RedirectToAction("Post", new { post.PostedDate.Year, post.PostedDate.Month, post.Key });
         }
     }
 }

@@ -1,9 +1,14 @@
 ﻿@inject AspNetBlog.Models.FormattingService Format
+@addTagHelper "*, Microsoft.AspNet.Mvc.TagHelpers"
 @model AspNetBlog.Models.Post
 
 <div class='blog-post'>
     <h2 class='title'>
-        <a href="#">@Model.Title</a>
+        <a asp-controller="Posts" 
+           asp-action="Post" 
+           asp-route-year="@Model.PostedDate.Year"
+           asp-route-month="@Model.PostedDate.Month"
+           asp-route-key="@Model.Key">@Model.Title</a>
     </h2>
     <p class='metadata'>
         <span>@Format.AsReadableDate(Model.PostedDate)</span>
