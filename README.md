@@ -7,5 +7,6 @@ Npgsql on [Nuget](https://www.nuget.org/packages/EntityFramework7.Npgsql/)
 
 Start from Linda course
 Link to course: [GitHub](https://github.com/jchadwick/UpAndRunningWithAspNet5)
+Next step rebuilding for full blog sistem
 
 Pretty date format taked from [www.dotnetperls.com](http://www.dotnetperls.com/pretty-date)
