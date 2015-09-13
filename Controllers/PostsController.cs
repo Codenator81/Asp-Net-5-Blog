@@ -6,6 +6,7 @@ using Microsoft.AspNet.Mvc;
 using AspNetBlog.Models;
 using Microsoft.Data.Entity;
 using Newtonsoft.Json;
+using Microsoft.AspNet.Authorization;
 
 namespace AspNetBlog.Controllers
 {
@@ -41,11 +42,13 @@ namespace AspNetBlog.Controllers
             return View(post);
         }
 
+        [Authorize]
         public IActionResult Create()
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create(Post post)
         {

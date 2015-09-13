@@ -10,6 +10,8 @@ using Microsoft.Framework.DependencyInjection;
 using Microsoft.Data.Entity;
 using Microsoft.Framework.Configuration;
 using Microsoft.Dnx.Runtime;
+using AspNetBlog.Models.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace AspNetBlog
 {
@@ -30,18 +32,24 @@ namespace AspNetBlog
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<AspNetBlog.Models.BlogDataContext>();
+            services.AddScoped<AspNetBlog.Models.Identity.IdentityDataContext>();
             services.AddTransient<AspNetBlog.Models.FormattingService>();
             var connectPostgres = "Host=localhost;Username=postgres;Password=root;Database=asp_net_blog";
+            var identityConnectionString = "Host=localhost;Username=postgres;Password=root;Database=asp_net_blog_identity";
             services.AddEntityFramework()
                 .AddNpgsql()
                 .AddDbContext<BlogDataContext>(options =>
-                    options.UseNpgsql(connectPostgres));
-
+                    options.UseNpgsql(connectPostgres))
+               .AddDbContext<IdentityDataContext>(dbConfig =>
+                    dbConfig.UseNpgsql(identityConnectionString));
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+               .AddEntityFrameworkStores<IdentityDataContext>();
             services.AddMvc();
         }
 
         public void Configure(IApplicationBuilder app)
         {
+            app.UseIdentity();
             var password = config["password"];
             if (config["debug"] == "true")
             {

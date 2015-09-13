@@ -14,7 +14,8 @@
     "Microsoft.Framework.Configuration": "1.0.0-beta7",
     "Microsoft.Framework.Configuration.Json": "1.0.0-beta7",
     "Microsoft.Framework.Configuration.UserSecrets": "1.0.0-beta7",
-    "EntityFramework.Core": "7.0.0-beta7"
+    "EntityFramework.Core": "7.0.0-beta7",
+    "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-beta7"
   },
 
   "commands": {
