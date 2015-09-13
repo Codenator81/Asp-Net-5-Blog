@@ -19,12 +19,30 @@ namespace AspNetBlog.Controllers
         }
 
         // GET: /<controller>/
-        public IActionResult Index()
+        public IActionResult Index(int page)
         {
+            var pageSize = 3;
+            var skip = page * pageSize;
+
             var posts =
                 _db.Posts
                     .OrderByDescending(x => x.PostedDate)
+                    .Skip(skip)
+                    .Take(pageSize)
                     .ToArray();
+            var totalPosts = _db.Posts.Count();
+            var totalPages = totalPosts / pageSize;
+            var previousPage = page - 1;
+            var nextPage = page + 1;
+
+            ViewBag.PreviousPage = previousPage;
+            ViewBag.HasPreviousPage = previousPage >= 0;
+            ViewBag.NextPage = nextPage;
+            ViewBag.HasNextPage = nextPage < totalPages;
+
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                return PartialView(posts);
+
             return View(posts);
         }
 
